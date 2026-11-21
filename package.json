@@ -4,7 +4,7 @@
   "scripts": {
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "vitest run --config vitest.config.mjs",
-    "test:integration": "node --test tests",
+    "test:integration": "node --test ./tests/*.test.js ./tests/*.test.mjs",
     "test:coverage": "vitest run --config vitest.config.mjs --coverage",
     "test:e2e": "playwright test --config playwright.config.mjs",
     "test:security": "node --test tests/security-regression.test.js",
