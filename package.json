@@ -1,0 +1,28 @@
+{
+  "name": "chronicos-extension",
+  "private": true,
+  "scripts": {
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "vitest run --config vitest.config.mjs",
+    "test:integration": "node --test tests",
+    "test:coverage": "vitest run --config vitest.config.mjs --coverage",
+    "test:e2e": "playwright test --config playwright.config.mjs",
+    "test:security": "node --test tests/security-regression.test.js",
+    "lint": "eslint .",
+    "check:manifest": "node scripts/validate-manifest.cjs",
+    "check:deps": "npm audit --audit-level=high",
+    "check": "npm run lint && npm test && npm run check:manifest && npm run check:deps",
+    "test:all": "npm run check && npm run test:e2e"
+  },
+  "dependencies": {
+    "pdfjs-dist": "6.5.438"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.65.1",
+    "@vitest/coverage-v8": "^5.1.1",
+    "eslint": "^10.15.0",
+    "globals": "^17.14.0",
+    "vitest": "^5.1.1"
+  }
+}

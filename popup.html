@@ -32,115 +32,150 @@
 
       <div class="alert alert-info hidden" id="page-warning">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        Navigate to a LinkedIn profile page to generate a message.
+        No LinkedIn profile page detected. You can still enter profile details manually.
       </div>
 
-      <div class="alert alert-warning hidden" id="no-key-warning">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        
-      </div>
+      <div class="profile-editor" id="profile-editor">
+        <h2 class="section-title">Recipient profile</h2>
+        <p class="field-hint">ChroNicos checks only the active tab URL. It never reads or scrapes LinkedIn page content. Enter details yourself and review them before generation.</p>
 
-      <div class="profile-card hidden" id="profile-section">
-        <div class="profile-avatar" id="profile-avatar">?</div>
-        <div class="profile-details">
-          <div class="profile-name" id="profile-name"></div>
-          <div class="profile-headline" id="profile-headline"></div>
-          <div class="profile-company" id="profile-company"></div>
+        <div class="field-group full">
+          <label class="field-label" for="profile-name-input">Name</label>
+          <input id="profile-name-input" type="text" class="field-input" autocomplete="off" />
         </div>
-      </div>
-
-      <div class="controls-row">
-        <div class="field-group">
-          <label class="field-label" for="message-type">Message Type</label>
-          <div class="select-wrapper">
-            <select id="message-type" class="field-select">
-              <option value="Networking">Networking</option>
-              <option value="Job">Job Opportunity</option>
-              <option value="Referral">Referral Request</option>
-              <option value="Collaboration">Collaboration</option>
-            </select>
+        <div class="field-group full">
+          <label class="field-label" for="profile-headline-input">Headline</label>
+          <input id="profile-headline-input" type="text" class="field-input" autocomplete="off" />
+        </div>
+        <div class="field-group full">
+          <label class="field-label" for="profile-company-input">Current company</label>
+          <input id="profile-company-input" type="text" class="field-input" autocomplete="off" />
+        </div>
+        <div class="controls-row">
+          <div class="field-group">
+            <label class="field-label" for="profile-location-input">Location</label>
+            <input id="profile-location-input" type="text" class="field-input" autocomplete="off" />
           </div>
-        </div>
-        <div class="field-group">
-          <label class="field-label" for="tone">Tone</label>
-          <div class="select-wrapper">
-            <select id="tone" class="field-select">
-              <option value="Formal">Formal</option>
-              <option value="Neutral" selected>Neutral</option>
-              <option value="Casual">Casual</option>
-            </select>
+          <div class="field-group">
+            <label class="field-label" for="profile-url-input">Profile URL</label>
+            <input id="profile-url-input" type="url" class="field-input" autocomplete="off" />
           </div>
         </div>
-      </div>
+        <div class="field-group full">
+          <label class="field-label" for="profile-about-input">About / professional summary</label>
+          <textarea id="profile-about-input" class="field-textarea" rows="3"></textarea>
+        </div>
 
-      <div class="mode-toggle">
-        <button class="mode-btn active" id="mode-simple">⚡ Quick Mode</button>
-        <button class="mode-btn" id="mode-deep">🔍 Deep Mode (3-Layer AI)</button>
-      </div>
+        <div class="profile-list-header">
+          <h3 class="section-title">Experience</h3>
+          <button class="btn-link" id="add-experience-btn" type="button">Add experience</button>
+        </div>
+        <div id="experience-list" class="profile-entry-list"></div>
 
-      <!-- Simple Mode -->
-      <div id="simple-mode-ui">
-        <button id="scrape-btn" class="btn btn-primary btn-full">
-          <span id="btn-label">Scrape &amp; Generate</span>
-          <span id="btn-spinner" class="spinner hidden"></span>
-        </button>
-      </div>
+        <div class="profile-list-header">
+          <h3 class="section-title">Education</h3>
+          <button class="btn-link" id="add-education-btn" type="button">Add education</button>
+        </div>
+        <div id="education-list" class="profile-entry-list"></div>
 
-      <!-- Deep Mode -->
-      <div id="deep-mode-ui" class="hidden">
-        <div class="pipeline-panel">
-          <div class="pipeline-header">3-Layer AI Pipeline</div>
-          <div class="layer-row">
-            <div class="layer-badge l1">L1</div>
-            <div class="layer-info">
-              <div class="layer-title">OpenAI — Profile Parser</div>
-              <div class="layer-desc">Structures raw LinkedIn DOM into JSON</div>
-            </div>
-            <div class="layer-status-wrap">
-              <div class="status-dot" id="l1-dot"></div>
-              <span class="layer-status-text" id="l1-text">Ready</span>
+        <div class="field-group full">
+          <label class="field-label" for="profile-skills-input">Skills</label>
+          <input id="profile-skills-input" type="text" class="field-input" placeholder="Separate skills with commas" autocomplete="off" />
+        </div>
+
+        <div class="controls-row">
+          <div class="field-group">
+            <label class="field-label" for="message-type">Message Type</label>
+            <div class="select-wrapper">
+              <select id="message-type" class="field-select">
+                <option value="Networking">Networking</option>
+                <option value="Job">Job Opportunity</option>
+                <option value="Referral">Referral Request</option>
+                <option value="Collaboration">Collaboration</option>
+              </select>
             </div>
           </div>
-          <div class="layer-row">
-            <div class="layer-badge l2">L2</div>
-            <div class="layer-info">
-              <div class="layer-title">OpenAI — Web Enrichment</div>
-              <div class="layer-desc">Searches company news &amp; public work</div>
-            </div>
-            <div class="layer-status-wrap">
-              <div class="status-dot" id="l2-dot"></div>
-              <span class="layer-status-text" id="l2-text">Ready</span>
-            </div>
-          </div>
-          <div class="layer-row">
-            <div class="layer-badge l3">L3</div>
-            <div class="layer-info">
-              <div class="layer-title">Message Writer</div>
-              <div class="layer-desc">Synthesizes everything into personalized message</div>
-            </div>
-            <div class="layer-status-wrap">
-              <div class="status-dot" id="l3-dot"></div>
-              <span class="layer-status-text" id="l3-text">Waiting</span>
+          <div class="field-group">
+            <label class="field-label" for="tone">Tone</label>
+            <div class="select-wrapper">
+              <select id="tone" class="field-select">
+                <option value="Formal">Formal</option>
+                <option value="Neutral" selected>Neutral</option>
+                <option value="Casual">Casual</option>
+              </select>
             </div>
           </div>
         </div>
-
-        <div class="hooks-panel hidden" id="hooks-panel">
-          <div class="hooks-label">⚡ Top hooks found</div>
-          <div id="hooks-list"></div>
+        <div class="field-group full">
+          <label class="field-label" for="message-objective">Specific goal (start with a verb, optional)</label>
+          <input id="message-objective" type="text" class="field-input" placeholder="e.g. learn about AI internship opportunities" maxlength="300" autocomplete="off" />
         </div>
 
-        <button id="enrich-btn" class="btn btn-primary btn-full">
-          <span id="enrich-label">Scrape + Enrich (L1 + L2)</span>
-          <span id="enrich-spinner" class="spinner hidden"></span>
-        </button>
-        <button id="deep-generate-btn" class="btn btn-secondary btn-full" disabled>
-          <span id="deep-gen-label">Generate Message (L3)</span>
-          <span id="deep-gen-spinner" class="spinner hidden"></span>
-        </button>
+        <fieldset class="mode-picker">
+          <legend class="field-label">Generation mode</legend>
+          <label class="mode-option">
+            <input type="radio" name="generation-mode" value="quick" checked />
+            <span><strong>Quick Mode</strong><small>Use the details you provide; no web research.</small></span>
+          </label>
+          <label class="mode-option">
+            <input type="radio" name="generation-mode" value="deep" />
+            <span><strong>Deep Mode</strong><small>Research public professional sources, review findings, then generate.</small></span>
+          </label>
+        </fieldset>
+
+        <button id="review-profile-btn" class="btn btn-primary btn-full" type="button">Review profile</button>
+      </div>
+
+      <div class="profile-review hidden" id="profile-review">
+        <h2 class="section-title">Review profile details</h2>
+        <div id="profile-review-content"></div>
+        <div id="objective-review"></div>
+        <div class="deep-consent hidden" id="deep-consent">
+          <p>Deep Mode uses Anthropic Web Search (up to five searches), followed by separate verification/matching and message-generation requests. Search receives only the recipient's name, role, company, headline, and skills. Verification receives your objective and only the resume facts selected below. The LinkedIn URL, location, and original PDF are excluded.</p>
+          <pre class="privacy-preview" id="deep-research-request-preview"></pre>
+          <label class="resume-inclusion-label">
+            <input id="confirm-deep-research" type="checkbox" />
+            Approve this research and matching request.
+          </label>
+        </div>
+        <div class="deep-consent hidden" id="quick-ai-consent">
+          <p>Quick Mode will send the following bounded recipient, resume, objective, and sender details to Anthropic for this message only. Approve each new or regenerated request separately.</p>
+          <pre class="privacy-preview" id="quick-ai-request-preview"></pre>
+          <label class="resume-inclusion-label">
+            <input id="confirm-quick-ai" type="checkbox" />
+            Approve this Quick Mode AI request.
+          </label>
+        </div>
+        <div class="resume-inclusion hidden" id="resume-inclusion">
+          <label class="resume-inclusion-label">
+            <input id="include-resume" type="checkbox" />
+            Include saved resume details for personalization
+          </label>
+          <p class="field-hint">Nothing is selected by default. Choose only the relevant structured details; the original PDF is never sent.</p>
+          <div class="resume-prompt-preview" id="resume-prompt-preview"></div>
+        </div>
+        <p class="field-hint">Quick Mode uses your reviewed details and selected resume facts. Deep Mode first searches public sources, then waits for you to review the cited findings before it generates a message.</p>
+        <div class="action-row">
+          <button id="edit-profile-btn" class="btn btn-secondary" type="button">Edit details</button>
+          <button id="confirm-profile-btn" class="btn btn-primary" type="button">Confirm &amp; Generate</button>
+        </div>
+        <section class="research-preview hidden" id="research-preview" aria-live="polite">
+          <h2 class="section-title">Research findings — review before generation</h2>
+          <p class="field-hint">Confidence, identity, credibility, and relevance ratings are AI assessments based on cited sources. Low-confidence findings and uncertain person matches are not used in the message. Check the source links before continuing.</p>
+          <div id="research-preview-content"></div>
+          <div class="deep-consent" id="deep-generation-consent">
+            <p>This separate request sends your reviewed recipient details, selected resume facts, sender details, and only the eligible findings above to Anthropic to write this message.</p>
+            <pre class="privacy-preview" id="deep-generation-request-preview"></pre>
+            <label class="resume-inclusion-label">
+              <input id="confirm-deep-generation" type="checkbox" />
+              Approve this message-generation request.
+            </label>
+          </div>
+        </section>
       </div>
 
       <div class="status-bar hidden" id="status-message"></div>
+      <button id="cancel-operation-btn" class="btn btn-secondary hidden" type="button">Cancel active request</button>
 
       <div class="message-area hidden" id="message-section">
         <div class="message-area-header">
@@ -165,14 +200,14 @@
     <!-- ── RECENT tab ── -->
     <section class="tab-content" id="tab-recent">
       <div class="recent-header hidden" id="recent-actions">
-        <span class="recent-subtitle">Last 5 contacts</span>
+        <span class="recent-subtitle">Last 5 messages</span>
         <button class="btn-ghost" id="clear-recent-btn">Clear all</button>
       </div>
       <div id="recent-list"></div>
       <div class="empty-state" id="no-recent">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         <p>No recent contacts yet.</p>
-        <p class="empty-hint">Generate a message on a LinkedIn profile to see it here.</p>
+        <p class="empty-hint">Confirm profile details and generate a message to see it here.</p>
       </div>
     </section>
 
@@ -183,18 +218,31 @@
         <!-- Optional: user's own API key -->
         <div class="license-key-section">
           <div class="license-key-label">Your Anthropic API Key (optional)</div>
-          <div class="license-key-desc">Leave empty to use Free Mode (no key needed). Add your own key for AI-written messages.</div>
+          <div class="license-key-desc">Quick Mode works without a key. Deep Mode requires your Anthropic key and web search access. The key is held in Chrome session storage and is cleared when Chrome exits.</div>
           <div class="license-key-input-wrap">
             <input id="api-key" type="password" class="license-key-input"
               placeholder="sk-ant-…" autocomplete="off" spellcheck="false" />
             <button class="validate-btn" id="validate-btn">Test</button>
           </div>
           <div class="key-validation-status hidden" id="key-validation-status"></div>
+          <button class="btn-ghost" id="remove-api-key-btn" type="button">Remove API key</button>
         </div>
 
         <div class="field-group full">
           <label class="field-label" for="user-name">Your Name</label>
           <input id="user-name" type="text" class="field-input" placeholder="Jane Smith" autocomplete="off" />
+        </div>
+
+        <div class="field-group full">
+          <label class="field-label" for="message-retention">Recent-message retention</label>
+          <div class="select-wrapper">
+            <select id="message-retention" class="field-select">
+              <option value="1">1 day</option>
+              <option value="7" selected>7 days</option>
+              <option value="30">30 days</option>
+            </select>
+          </div>
+          <p class="field-hint">Recent generated messages expire automatically. Recipient and research data are not persisted between popup sessions.</p>
         </div>
 
         <div class="field-group full">
@@ -204,20 +252,38 @@
         </div>
 
         <div class="field-group full">
-          <label class="field-label">Your Resume (PDF)</label>
+          <div class="field-label">Your Resume (PDF, processed locally)</div>
           <div class="file-upload-area" id="file-upload-area">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M14 2v6h6M12 18v-6M9 15l3-3 3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span id="file-label">Click to upload or drag PDF here</span>
-            <input id="resume-upload" type="file" accept=".pdf" class="file-input" />
+            <span id="file-label">Choose or drop a PDF to add or replace your resume</span>
+            <input id="resume-upload" type="file" accept=".pdf,application/pdf" class="file-input" />
           </div>
           <div class="resume-status hidden" id="resume-status"></div>
+          <p class="field-hint">Text is extracted in this extension. Only structured resume details are saved; the original PDF is discarded. Scanned PDFs need OCR, which is not supported yet.</p>
+          <div class="resume-preview hidden" id="resume-preview">
+            <h3 class="section-title">Saved resume details</h3>
+            <div id="resume-preview-content"></div>
+            <button id="edit-resume-details-btn" class="btn-link" type="button">Review or edit extracted details</button>
+            <div class="resume-edit-form hidden" id="resume-edit-form"></div>
+            <div class="action-row hidden" id="resume-edit-actions">
+              <button id="cancel-resume-edit-btn" class="btn btn-secondary" type="button">Cancel</button>
+              <button id="save-resume-edit-btn" class="btn btn-primary" type="button">Save edited details</button>
+            </div>
+            <button id="delete-resume-btn" class="btn-ghost" type="button">Delete saved resume</button>
+          </div>
         </div>
 
         <button id="save-settings-btn" class="btn btn-primary btn-full">Save Settings</button>
         <div class="status-bar hidden" id="settings-status"></div>
 
+        <div class="privacy-controls">
+          <h3 class="section-title">Personal data controls</h3>
+          <button id="clear-recipient-btn" class="btn btn-secondary btn-full" type="button">Clear recipient and research data</button>
+          <button id="clear-all-data-btn" class="btn btn-secondary btn-full" type="button">Clear all extension data</button>
+        </div>
+
         <div class="settings-note">
-          Everything is stored locally on your device. No data is sent to any company server.
+          Resume details, preferences, and recent messages are stored locally and are not synced. The API key uses session storage, which is not encrypted secret storage. Deep Mode sends recipient details to Anthropic for web research, then sends the selected resume facts for verification/matching and message generation. The original PDF and LinkedIn URL are not sent.
         </div>
 
       </div>
@@ -225,7 +291,12 @@
 
   </div>
 
+  <script src="profile.js"></script>
+  <script src="resume-data.js"></script>
+  <script src="research-data.js"></script>
+  <script src="request-data.js"></script>
   <script src="utils/cache.js"></script>
+  <script type="module" src="resume-parser.mjs"></script>
   <script src="popup.js"></script>
 </body>
 </html>
