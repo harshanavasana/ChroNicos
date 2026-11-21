@@ -1,7 +1,7 @@
-import * as pdfjsLib from './node_modules/pdfjs-dist/build/pdf.mjs';
+import * as pdfjsLib from './node_modules/pdfjs-dist/legacy/build/pdf.mjs';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = chrome.runtime.getURL(
-  'node_modules/pdfjs-dist/build/pdf.worker.mjs'
+  'node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs'
 );
 
 async function parseResumePdf(file) {
